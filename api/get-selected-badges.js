@@ -1,25 +1,25 @@
 import Badge from "../models/Badge.js";
 import connectDB from "../db/mongo.js";
+import express from 'express';
 
-export default async function handler(req, res) {
+const router = express.Router();
+
+router.post('/', async (req, res) => {  // Use POST instead of GET
   await connectDB();
 
-  if (req.method === "POST") {  // Changed from GET to POST
-    const { storeId } = req.body;  // Now the storeId comes from the body instead of query
+  const { storeId } = req.body;  // StoreId comes from the body now
 
-    try {
-      const badgeDoc = await Badge.findOne({ storeId });
+  try {
+    const badgeDoc = await Badge.findOne({ storeId });
 
-      if (badgeDoc) {
-        res.status(200).json({ success: true, selectedBadges: badgeDoc.selectedBadges });
-      } else {
-        res.status(404).json({ success: false, message: "No badges found for this store" });
-      }
-    } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to fetch badges", error });
+    if (badgeDoc) {
+      res.status(200).json({ success: true, selectedBadges: badgeDoc.selectedBadges });
+    } else {
+      res.status(404).json({ success: false, message: "No badges found for this store" });
     }
-  } else {
-    res.setHeader("Allow", ["POST"]);  // Changed allowed methods to POST
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch badges", error });
   }
-}
+});
+
+export default router;

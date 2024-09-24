@@ -16,8 +16,8 @@ connectDB();
 app.use(express.json());
 
 // API Routes
-app.use(saveBadgesRoute);
-app.use(getBadgesRoute);
+app.use('/api/save-selected-badges', saveBadgesRoute);
+app.use('/api/get-selected-badges', getBadgesRoute);
 
 // Start server
 const PORT = process.env.PORT || 5000;
