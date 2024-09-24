@@ -4,9 +4,9 @@ import connectDB from "../db/mongo.js";
 export default async function handler(req, res) {
   await connectDB();
 
-  const { storeId } = req.query;
+  if (req.method === "POST") {  // Changed from GET to POST
+    const { storeId } = req.body;  // Now the storeId comes from the body instead of query
 
-  if (req.method === "GET") {
     try {
       const badgeDoc = await Badge.findOne({ storeId });
 
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       res.status(500).json({ success: false, message: "Failed to fetch badges", error });
     }
   } else {
-    res.setHeader("Allow", ["GET"]);
+    res.setHeader("Allow", ["POST"]);  // Changed allowed methods to POST
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
