@@ -1,5 +1,5 @@
-import Badge from "../../models/Badge.js";
-import connectDB from "../../db/mongo.js";
+import Badge from "../models/Badge.js";
+import connectDB from "../db/mongo.js";
 
 export default async function handler(req, res) {
   await connectDB();
