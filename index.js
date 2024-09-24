@@ -14,7 +14,7 @@ connectDB();
 
 // Middleware to parse JSON
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: '*' }))
 // API Routes
 app.use('/api/save-selected-badges', saveBadgesRoute);
 app.use('/api/get-selected-badges', getBadgesRoute);
