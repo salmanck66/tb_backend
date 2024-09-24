@@ -11,7 +11,9 @@ dotenv.config();
 const app = express();
 
 // Enable CORS
-app.use(cors()); // This allows all origins for now. You can restrict it later.
+app.use(cors({
+  origin: '*'  // You can restrict the origin for better security, e.g., 'https://your-frontend-domain.com'
+}));
 
 // Connect to MongoDB
 connectDB();
@@ -20,8 +22,8 @@ connectDB();
 app.use(express.json());
 
 // API Routes
-app.use(saveBadgesRoute);
-app.use(getBadgesRoute);
+app.post('/api/save-selected-badges', saveBadgesRoute);
+app.post('/api/get-selected-badges', getBadgesRoute);
 
 // Start server
 const PORT = process.env.PORT || 5000;

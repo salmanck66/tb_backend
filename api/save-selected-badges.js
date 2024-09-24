@@ -1,12 +1,6 @@
-import Badge from "../models/Badge.js";
-import connectDB from "../db/mongo.js";
-import express from 'express';
+import Badge from '../models/Badge.js';
 
-const router = express.Router();
-
-router.post('/', async (req, res) => {
-  await connectDB();
-
+export default async function saveBadges(req, res) {
   const { storeId, badges } = req.body;
 
   try {
@@ -20,10 +14,8 @@ router.post('/', async (req, res) => {
       await badgeDoc.save();
     }
 
-    res.status(200).json({ success: true, message: "Badges saved successfully!" });
+    res.status(200).json({ success: true, message: 'Badges saved successfully!' });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to save badges", error });
+    res.status(500).json({ success: false, message: 'Failed to save badges', error });
   }
-});
-
-export default router;
+}
