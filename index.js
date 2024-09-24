@@ -12,9 +12,8 @@ const app = express();
 
 // Enable CORS
 app.use(cors({
-    origin: 'https://trustbadgesfrontend.vercel.app', // Your frontend URL
-    credentials: true, // Allow cookies and headers like Authorization
-  }));
+  origin: '*'  // You can restrict the origin for better security, e.g., 'https://your-frontend-domain.com'
+}));
 
 // Connect to MongoDB
 connectDB();
