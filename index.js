@@ -1,23 +1,27 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './db/mongo.js'; // Your MongoDB connection script
 import saveBadgesRoute from './api/save-selected-badges.js';
 import getBadgesRoute from './api/get-selected-badges.js';
-import cors from 'cors'; // Import the CORS package
+
 // Load environment variables
 dotenv.config();
 
 const app = express();
+
+// Enable CORS
+app.use(cors()); // This allows all origins for now. You can restrict it later.
 
 // Connect to MongoDB
 connectDB();
 
 // Middleware to parse JSON
 app.use(express.json());
-app.use(cors({ origin: '*' }))
+
 // API Routes
-app.use('/api/save-selected-badges', saveBadgesRoute);
-app.use('/api/get-selected-badges', getBadgesRoute);
+app.use(saveBadgesRoute);
+app.use(getBadgesRoute);
 
 // Start server
 const PORT = process.env.PORT || 5000;
